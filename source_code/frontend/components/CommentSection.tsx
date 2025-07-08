@@ -2,11 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import { api } from '@/lib/api'
+import CommentItem from '@/components/CommentItem'
+import { useUser } from '@/contexts/UserContext'
+
 
 export default function CommentSection({ postId }: { postId: string }) {
   const [comments, setComments] = useState<any[]>([])
   const [content, setContent] = useState('')
-  const [user, setUser] = useState<any>(null)
+  const {user, setUser} = useUser()
 
   useEffect(() => {
     fetchComments()
@@ -29,6 +32,19 @@ export default function CommentSection({ postId }: { postId: string }) {
     }
   }
 
+  const handleReply = async (parentId: string, replyContent: string) => {
+    try {
+      await api.post(`/posts/${postId}/comments`, {
+        content: replyContent,
+        parent_id: parentId,
+      })
+      fetchComments()
+    } catch (err) {
+      alert('Bạn cần đăng nhập để phản hồi.')
+    }
+  }
+
+
   return (
     <div className="mt-8 space-y-4">
       <h2 className="text-xl font-semibold">Bình luận</h2>
@@ -47,10 +63,7 @@ export default function CommentSection({ postId }: { postId: string }) {
       <div className="space-y-4 mt-4">
         {comments.length === 0 && <p>Chưa có bình luận nào.</p>}
         {comments.map((c) => (
-          <div key={c.id} className="border p-3 rounded bg-gray-50">
-            <p className="text-sm text-gray-600">{c.user.name} – {new Date(c.created_at).toLocaleString()}</p>
-            <p>{c.content}</p>
-          </div>
+          <CommentItem key={c.id} comment={c} onReply={handleReply} />
         ))}
       </div>
     </div>

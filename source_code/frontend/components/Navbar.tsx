@@ -11,7 +11,7 @@ export default function Navbar() {
   const { user, setUser } = useUser()
 
   const handleLogout = () => {
-    Cookies.remove('token')
+    Cookies.remove('access_token')
     setUser(null)
     router.push('/login')
   }
