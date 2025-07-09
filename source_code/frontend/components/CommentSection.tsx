@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react'
 import { api } from '@/lib/api'
 import CommentItem from '@/components/CommentItem'
 import { useUser } from '@/contexts/UserContext'
+import dynamic from 'next/dynamic'
 
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
 export default function CommentSection({ postId }: { postId: string }) {
   const [comments, setComments] = useState<any[]>([])
@@ -49,13 +51,14 @@ export default function CommentSection({ postId }: { postId: string }) {
     <div className="mt-8 space-y-4">
       <h2 className="text-xl font-semibold">Bình luận</h2>
 
-      <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="Viết bình luận..."
-        className="w-full border rounded p-2"
-        rows={3}
-      />
+      <div data-color-mode="light" className="w-full">
+        <MDEditor
+          value={content}
+          onChange={(value) => setContent(value || '')}
+          height={150}
+          preview="edit"
+        />
+      </div>
       <button onClick={handleComment} className="px-4 py-2 bg-blue-600 text-white rounded">
         Gửi bình luận
       </button>
