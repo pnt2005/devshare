@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import TimeDisplay from '@/components/TimeDisplay'
 
 export default function PostCard({ post }: { post: any }) {
   const router = useRouter()
@@ -17,7 +18,7 @@ export default function PostCard({ post }: { post: any }) {
     >
       <h2 className="text-xl font-semibold hover:text-blue-600">{post.title}</h2>
       <p className="text-gray-600 text-sm">
-        {post.user.name} – {new Date(post.created_at).toLocaleString()}
+        {post.user.name} – <TimeDisplay isoTime={post.created_at} />
       </p>
       <p className="mt-1 text-gray-800 line-clamp-3">{post.excerpt}...</p>
       <div className="flex flex-wrap gap-2 mt-2">

@@ -1,6 +1,5 @@
 from app.extensions import db
-from datetime import datetime
-from zoneinfo import ZoneInfo
+from datetime import datetime, timezone, timedelta
 
 post_tags = db.Table('post_tag',
     db.Column('post_id', db.Integer, db.ForeignKey('post.id'), primary_key=True),
@@ -17,7 +16,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref='posts')
     tag = db.relationship('Tag', secondary=post_tags, backref='post')
-    created_at = db.Column(db.DateTime, default=lambda: datetime.now(ZoneInfo("Asia/Ho_Chi_Minh")))
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc) + timedelta(hours=7))
 
     def to_dict(self):
         return {

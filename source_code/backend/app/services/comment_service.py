@@ -24,7 +24,7 @@ def build_comment_tree(comments):
                 "name": c.user.name
             },
             "content": c.content,
-            #"created_at": c.created_at.isoformat(),
+            "created_at": c.created_at.isoformat(),
             "replies": []
         }
 
@@ -41,6 +41,5 @@ def build_comment_tree(comments):
 
 
 def list_comments_service(post_id):
-    #comments = Comment.query.filter_by(post_id=post_id).order_by(Comment.created_at).all()
-    comments = Comment.query.filter_by(post_id=post_id).all()
+    comments = Comment.query.filter_by(post_id=post_id).order_by(Comment.created_at).all()
     return build_comment_tree(comments)

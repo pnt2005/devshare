@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import TimeDisplay from '@/components/TimeDisplay'
 
 export default function CommentItem({
   comment,
@@ -23,7 +24,7 @@ export default function CommentItem({
 
   return (
     <div className={`ml-${Math.min(depth * 4, 12)} mt-2 border-l pl-4`}>
-      <p className="text-sm text-gray-600">{comment.user.name} – {new Date(comment.created_at).toLocaleString()}</p>
+      <p className="text-sm text-gray-600">{comment.user.name} – <TimeDisplay isoTime={comment.created_at}/></p>
       <p>{comment.content}</p>
       <button
         onClick={() => setShowReplyBox(!showReplyBox)}
