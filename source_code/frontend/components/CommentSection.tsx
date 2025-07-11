@@ -11,7 +11,6 @@ const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 export default function CommentSection({ postId }: { postId: string }) {
   const [comments, setComments] = useState<any[]>([])
   const [content, setContent] = useState('')
-  const {user, setUser} = useUser()
 
   useEffect(() => {
     fetchComments()
