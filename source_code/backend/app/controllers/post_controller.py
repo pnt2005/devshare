@@ -5,6 +5,7 @@ from app.schemas.comment_schema import CommentSchema
 from marshmallow import ValidationError
 from app.services.post_service import (
     create_post_service,
+    get_posts_by_user,
     list_posts_service,
     get_post_service,
     update_post_service,
@@ -111,3 +112,9 @@ def comment_post(post_id):
 def list_comments(post_id):
     comments = list_comments_service(post_id)
     return jsonify(comments)
+
+#list posts and drafts of user
+@post_bp.route("/posts/user/<int:user_id>", methods=["GET"])
+def get_user_posts(user_id):
+    result = get_posts_by_user(user_id)
+    return jsonify(result)

@@ -88,3 +88,12 @@ def get_drafts_service(user_id):
     return {
         "posts": [p.to_dict() for p in drafts]
     }
+
+#get posts and drafts by user
+def get_posts_by_user(user_id: int):
+    published_posts = Post.query.filter_by(user_id=user_id, status='published').order_by(Post.created_at.desc()).all()
+    draft_posts = Post.query.filter_by(user_id=user_id, status='draft').order_by(Post.created_at.desc()).all()
+    return {
+        "published": [post.to_dict() for post in published_posts],
+        "drafts": [post.to_dict() for post in draft_posts]
+    }
