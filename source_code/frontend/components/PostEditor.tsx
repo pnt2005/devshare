@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
-import { api } from '@/lib/api'
+import { api } from '@/utils/api'
 import { useState } from 'react'
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })

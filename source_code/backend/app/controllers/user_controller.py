@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
 from app.schemas.user_schema import RegisterSchema, LoginSchema, UserInfoSchema
-from app.services.user_service import register_user
+from app.services.user_service import register_user, authenticate_user, refresh_access_token
 from app.models.user import User
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 user_bp = Blueprint('users', __name__)
 register_schema = RegisterSchema()
@@ -30,12 +30,18 @@ def login():
     if errors:
         return jsonify(errors), 400
 
-    user = User.query.filter_by(email=data['email']).first()
-    if user and user.check_password(data['password']):
-        access_token = create_access_token(identity=str(user.id))
-        return jsonify(access_token=access_token), 200
+    tokens, err = authenticate_user(data['email'], data['password'])
+    if err:
+        return jsonify({"error": err}), 401
+    return jsonify(tokens), 200
 
-    return jsonify({"error": "Invalid credentials"}), 401
+
+@user_bp.route('/refresh', methods=['POST'])
+@jwt_required(refresh=True)
+def refresh():
+    current_user = get_jwt_identity()
+    access_token = refresh_access_token(current_user)
+    return jsonify(access_token=access_token), 200
 
 
 @user_bp.route('/me', methods=['GET'])

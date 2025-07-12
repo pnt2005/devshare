@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { api } from '@/lib/api' 
+import { api } from '@/utils/api' 
 import { useUser } from '@/contexts/UserContext' 
 import PostCard from '@/components/PostCard'
 

@@ -4,7 +4,7 @@ import { useUser } from '@/contexts/UserContext'
 import { useRouter } from 'next/navigation'
 import PostDetail from './PostDetail'
 import CommentSection from './CommentSection'
-import { api } from '@/lib/api'
+import { api } from '@/utils/api'
 import { useState, useEffect } from 'react'
 
 function useHasMounted() {

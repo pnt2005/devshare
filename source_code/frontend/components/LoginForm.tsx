@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { api } from '@/lib/api'
+import { api } from '@/utils/api'
 import Cookies from 'js-cookie'
 import { useUser } from '@/contexts/UserContext'
 
@@ -19,7 +19,11 @@ export default function LoginForm() {
 
     try {
       const res = await api.post('/login', { email, password })
-      Cookies.set('access_token', res.data.access_token, { expires: 7 })
+      const { access_token, refresh_token } = res.data
+
+      Cookies.set('access_token', access_token)
+      Cookies.set('refresh_token', refresh_token, { expires: 30 })
+      
       api.get("/me").then((res) => setUser(res.data));
       router.push('/') // chuyển hướng sau khi login thành công
     } catch (err: any) {

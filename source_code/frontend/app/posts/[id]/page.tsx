@@ -1,5 +1,5 @@
 import PostClientPage from '@/components/PostClientPage'
-import { api } from '@/lib/api'
+import { api } from '@/utils/api'
 import { notFound } from 'next/navigation'
 
 interface Params {

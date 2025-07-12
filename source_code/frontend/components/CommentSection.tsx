@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { api } from '@/lib/api'
+import { api } from '@/utils/api'
 import CommentItem from '@/components/CommentItem'
 import { useUser } from '@/contexts/UserContext'
 import dynamic from 'next/dynamic'

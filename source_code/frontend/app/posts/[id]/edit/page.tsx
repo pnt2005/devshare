@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
-import { api } from '@/lib/api'
+import { api } from '@/utils/api'
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 

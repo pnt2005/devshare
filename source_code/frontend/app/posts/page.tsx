@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import PostCard from '@/components/PostCard'
-import { api } from '@/lib/api'
+import { api } from '@/utils/api'
 
 export default function PostListPage() {
   const searchParams = useSearchParams()

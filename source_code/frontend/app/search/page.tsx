@@ -2,7 +2,7 @@
 
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { api } from '@/lib/api'
+import { api } from '@/utils/api'
 import PostCard from '@/components/PostCard'
 
 export default function SearchPage() {
