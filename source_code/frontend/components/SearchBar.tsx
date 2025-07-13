@@ -27,7 +27,7 @@ export default function SearchBar() {
         type="submit"
         className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
       >
-        Tìm
+        Find
       </button>
     </form>
   )

@@ -23,7 +23,7 @@ def create_post_service(data, user_id):
     return post
 
 #list post with pagination
-def list_posts_service(page, per_page=1):
+def list_posts_service(page, per_page=5):
     posts = Post.query.filter_by(status='published') \
                       .order_by(Post.id.desc()) \
                       .paginate(page=page, per_page=per_page, error_out=False)
