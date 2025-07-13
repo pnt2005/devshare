@@ -3,6 +3,9 @@ from flask_cors import CORS
 from app.extensions import db, jwt
 from app.routes import register_routes
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 
 def create_app(config_class="app.config.config.Config"):
     app = Flask(__name__)

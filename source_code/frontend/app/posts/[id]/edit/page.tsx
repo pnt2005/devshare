@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import { api } from '@/utils/api'
+import toast from 'react-hot-toast'
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
@@ -34,8 +35,12 @@ export default function EditPostPage() {
         status: publish ? 'published' : 'draft'
       })
       router.push(publish ? '/posts' : '/drafts')
-    } catch (err) {
-      alert('Update fail')
+    } catch (err: any) {
+        if (err.response?.data?.error) {
+          toast.error(err.response.data.error)
+        } else {
+          toast.error("error")
+        }
     }
   }
 

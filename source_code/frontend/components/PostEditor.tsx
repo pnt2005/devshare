@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { api } from '@/utils/api'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
@@ -36,10 +37,14 @@ export default function PostEditor() {
         tag: data.tags.split(',').map((t) => t.trim()),
         status: publish ? 'published' : 'draft',
       })
-
+      toast.success("Success")
       router.push(`/posts/${res.data.id}`)
     } catch (err: any) {
-      console.error('Create post error:', err.response?.data || err.message)
+        if (err.response?.data?.error) {
+          toast.error(err.response.data.error)
+        } else {
+          toast.error("error")
+        }
     }
   }
 

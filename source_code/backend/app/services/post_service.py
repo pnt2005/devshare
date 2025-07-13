@@ -2,13 +2,20 @@ from app.models.post import Post
 from app.extensions import db
 from app.models.tag import Tag
 from app.models.user import User
+from app.services.utils import is_content_flagged
 
-#create post
 def create_post_service(data, user_id):
     tag_names = data.pop('tag', [])
-    post = Post(**data, user_id=user_id)
+    content = data.get('content', '')
 
-    content = data['content']
+    #check content
+    if is_content_flagged(content):
+        return {"error": "Content is not suitable"}, 400
+    #check title
+    if is_content_flagged(data["title"]):
+        return {"error": "Title is not suitable"}, 400
+
+    post = Post(**data, user_id=user_id)
     post.excerpt = content[:150] if len(content) > 150 else content
 
     for name in tag_names:
@@ -47,10 +54,16 @@ def update_post_service(post_id, user_id, data):
     if post.user_id != user_id:
         return {"error": "Permission denied"}, 403
 
-    if "title" in data:
-        post.title = data["title"]
     if "content" in data:
+        #check content
+        if is_content_flagged(data["content"]):
+            return {"error": "Content is not suitable"}, 400
         post.content = data["content"]
+    if "title" in data:
+        #check title
+        if is_content_flagged(data["title"]):
+            return {"error": "Title is not suitable"}, 400
+        post.title = data["title"]
     if "status" in data and data["status"] in ["draft", "published"]:
         post.status = data["status"]
 
