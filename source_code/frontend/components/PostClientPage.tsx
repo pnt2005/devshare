@@ -6,6 +6,7 @@ import PostDetail from './PostDetail'
 import CommentSection from './CommentSection'
 import { api } from '@/utils/api'
 import { useState, useEffect } from 'react'
+import toast from 'react-hot-toast'
 
 function useHasMounted() {
   const [mounted, setMounted] = useState(false)
@@ -25,10 +26,10 @@ export default function PostClientPage({ post }: { post: any }) {
     if (!confirm('Do you really want to delete this post?')) return
     try {
       await api.delete(`/posts/${post.id}`)
-      alert('Delete successed')
+      toast.success('Delete successed')
       router.push('/posts')
     } catch (err) {
-      alert('Delete failed')
+      toast.error('Delete failed')
       console.error(err)
     }
   }
