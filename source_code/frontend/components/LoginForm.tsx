@@ -27,7 +27,7 @@ export default function LoginForm() {
       api.get("/me").then((res) => setUser(res.data));
       router.push('/') // chuyển hướng sau khi login thành công
     } catch (err: any) {
-      setError(err.response?.data?.msg || 'Đăng nhập thất bại')
+      setError(err.response?.data?.msg || 'Login fail')
     }
   }
 
@@ -47,7 +47,7 @@ export default function LoginForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Mật khẩu</label>
+        <label className="block text-sm font-medium">Password</label>
         <input
           type="password"
           className="w-full border p-2 rounded-md mt-1"
@@ -61,13 +61,13 @@ export default function LoginForm() {
         type="submit"
         className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
       >
-        Đăng nhập
+        Login
       </button>
 
       <p className="text-sm text-center mt-4">
-        Chưa có tài khoản?{' '}
+        Dont't have an account yet?{' '}
         <a href="/register" className="text-blue-600 hover:underline">
-          Đăng ký
+          Logout
         </a>
       </p>
     </form>

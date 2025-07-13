@@ -34,7 +34,7 @@ export default function CommentItem({
         onClick={() => setShowReplyBox(!showReplyBox)}
         className="text-blue-500 text-sm mt-1"
       >
-        Trả lời
+        Reply
       </button>
 
       {showReplyBox && (
@@ -51,7 +51,7 @@ export default function CommentItem({
             onClick={handleReply}
             className="px-2 py-1 text-sm bg-blue-500 text-white rounded mt-1"
           >
-            Gửi phản hồi
+            Reply
           </button>
         </div>
       )}

@@ -32,7 +32,7 @@ export default function ProfilePage() {
         setPosts(data.published)
         setDrafts(data.drafts)
       } catch (err) {
-        console.error('Lỗi khi load bài viết:', err)
+        console.error('fetch error:', err)
       } finally {
         setLoading(false)
       }
@@ -41,8 +41,8 @@ export default function ProfilePage() {
     fetchData()
   }, [user])
 
-  if (!user) return <div>Bạn chưa đăng nhập.</div>
-  if (loading) return <div>Đang tải dữ liệu...</div>
+  if (!user) return
+  if (loading) return <div>Loading...</div>
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -57,20 +57,20 @@ export default function ProfilePage() {
         {/* Cột phải: Bài viết */}
         <div className="md:col-span-2 space-y-10">
           <section>
-            <h2 className="text-xl font-semibold mb-4">📝 Bài viết đã đăng</h2>
+            <h2 className="text-xl font-semibold mb-4">📝 Posts</h2>
             {posts.length > 0 ? (
               posts.map((post) => <PostCard key={post.id} post={post} />)
             ) : (
-              <p>Chưa có bài viết nào.</p>
+              <p>No posts yet.</p>
             )}
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold mb-4">📄 Bản nháp</h2>
+            <h2 className="text-xl font-semibold mb-4">📄 Drafts</h2>
             {drafts.length > 0 ? (
               drafts.map((post) => <PostCard key={post.id} post={post} />)
             ) : (
-              <p>Chưa có bản nháp nào.</p>
+              <p>No drafts yet.</p>
             )}
           </section>
         </div>

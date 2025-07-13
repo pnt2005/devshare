@@ -22,7 +22,7 @@ export default function EditPostPage() {
         setContent(res.data.content || '')
         setStatus(res.data.status || '')
       })
-      .catch(() => alert('Không tìm thấy bài viết!'))
+      .catch(() => alert('Post not found!'))
       .finally(() => setLoading(false))
   }, [id])
 
@@ -35,29 +35,29 @@ export default function EditPostPage() {
       })
       router.push(publish ? '/posts' : '/drafts')
     } catch (err) {
-      alert('Cập nhật thất bại!')
+      alert('Update fail')
     }
   }
 
   const handleDelete = async () => {
-    if (!confirm('Bạn có chắc chắn muốn xoá bài viết này?')) return
+    if (!confirm('Are you sure to delete this post?')) return
     try {
       await api.delete(`/posts/${id}`)
       router.push(status === 'published' ? '/posts' : '/drafts')
     } catch (err) {
-      alert('Xoá thất bại!')
+      alert('Delete failed!')
     }
   }
 
-  if (loading) return <p className="p-4">Đang tải bài viết...</p>
+  if (loading) return <p className="p-4">Loading...</p>
 
   return (
     <main className="max-w-3xl mx-auto py-10 px-4 space-y-4">
-      <h1 className="text-2xl font-bold">✏️ Chỉnh sửa bài viết</h1>
+      <h1 className="text-2xl font-bold">✏️ Edit</h1>
 
       <input
         type="text"
-        placeholder="Tiêu đề bài viết"
+        placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         className="w-full border p-2 rounded"
@@ -72,13 +72,13 @@ export default function EditPostPage() {
               onClick={() => handleUpdate(false)}
               className="bg-gray-500 text-white px-4 py-2 rounded"
             >
-              💾 Lưu nháp
+              💾 Save as draft
             </button>
             <button
               onClick={() => handleUpdate(true)}
               className="bg-blue-600 text-white px-4 py-2 rounded"
             >
-              🚀 Đăng bài
+              🚀 Post
             </button>
           </>
         ) : (
@@ -86,7 +86,7 @@ export default function EditPostPage() {
             onClick={() => handleUpdate(true)}
             className="bg-green-600 text-white px-4 py-2 rounded"
           >
-            🔄 Cập nhật
+            🔄 Update
           </button>
         )}
 
@@ -94,7 +94,7 @@ export default function EditPostPage() {
           onClick={handleDelete}
           className="bg-red-600 text-white px-4 py-2 rounded"
         >
-          🗑️ Xoá bài viết
+          🗑️ Delete
         </button>
       </div>
     </main>

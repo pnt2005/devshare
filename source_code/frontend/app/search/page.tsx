@@ -26,7 +26,7 @@ export default function SearchPage() {
         setPosts(res.data.posts)
         setTotalPages(res.data.total_pages)
       })
-      .catch((err) => console.error('Lỗi tìm kiếm:', err))
+      .catch((err) => console.error('Search error:', err))
       .finally(() => setLoading(false))
   }, [query, page])
 
@@ -36,12 +36,12 @@ export default function SearchPage() {
 
   return (
     <main className="max-w-3xl mx-auto py-10 px-4 space-y-6">
-      <h1 className="text-2xl font-bold">🔍 Kết quả cho: "{query}"</h1>
+      <h1 className="text-2xl font-bold">🔍 Results for: "{query}"</h1>
 
       {loading ? (
-        <p>Đang tải kết quả...</p>
+        <p>Result loading...</p>
       ) : posts.length === 0 ? (
-        <p>Không tìm thấy bài viết nào phù hợp.</p>
+        <p>No posts.</p>
       ) : (
         <>
           <div className="space-y-6">
@@ -58,10 +58,10 @@ export default function SearchPage() {
                 page > 1 ? 'bg-gray-200 hover:bg-gray-300' : 'text-gray-400 cursor-not-allowed'
               }`}
             >
-              ← Trang trước
+              ← Previous
             </button>
 
-            <span className="text-gray-600">Trang {page} / {totalPages}</span>
+            <span className="text-gray-600">Page {page} / {totalPages}</span>
 
             <button
               disabled={page >= totalPages}
@@ -70,7 +70,7 @@ export default function SearchPage() {
                 page < totalPages ? 'bg-gray-200 hover:bg-gray-300' : 'text-gray-400 cursor-not-allowed'
               }`}
             >
-              Trang sau →
+              Next →
             </button>
           </div>
         </>

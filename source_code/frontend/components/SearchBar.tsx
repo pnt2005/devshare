@@ -20,7 +20,7 @@ export default function SearchBar() {
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Tìm bài viết..."
+        placeholder="Find post..."
         className="border rounded px-3 py-1 text-sm"
       />
       <button

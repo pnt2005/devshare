@@ -9,7 +9,6 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'DevShare Lite',
-  description: 'Diễn đàn chia sẻ kiến thức IT',
 }
 
 export default function RootLayout({
@@ -18,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="vi" data-theme="winter">
+    <html lang="en" data-theme="winter">
       <body className={inter.className}>
         <Toaster position="top-center" reverseOrder={false} />
         <UserProvider>

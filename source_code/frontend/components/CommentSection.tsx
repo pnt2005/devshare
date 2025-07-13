@@ -14,7 +14,6 @@ export default function CommentSection({ postId }: { postId: string }) {
 
   useEffect(() => {
     fetchComments()
-    // nếu dùng token để lấy user từ backend, bạn có thể gọi API /me
   }, [])
 
   const fetchComments = async () => {
@@ -29,7 +28,7 @@ export default function CommentSection({ postId }: { postId: string }) {
       setContent('')
       fetchComments()
     } catch (err) {
-      alert('Bạn cần đăng nhập để bình luận.')
+      alert('You need to login to comment')
     }
   }
 
@@ -41,14 +40,14 @@ export default function CommentSection({ postId }: { postId: string }) {
       })
       fetchComments()
     } catch (err) {
-      alert('Bạn cần đăng nhập để phản hồi.')
+      alert('You need to login to reply')
     }
   }
 
 
   return (
     <div className="mt-8 space-y-4">
-      <h2 className="text-xl font-semibold">Bình luận</h2>
+      <h2 className="text-xl font-semibold">Comments</h2>
 
       <div data-color-mode="light" className="w-full">
         <MDEditor
@@ -59,11 +58,11 @@ export default function CommentSection({ postId }: { postId: string }) {
         />
       </div>
       <button onClick={handleComment} className="px-4 py-2 bg-blue-600 text-white rounded">
-        Gửi bình luận
+        Comment
       </button>
 
       <div className="space-y-4 mt-4">
-        {comments.length === 0 && <p>Chưa có bình luận nào.</p>}
+        {comments.length === 0 && <p>No comments.</p>}
         {comments.map((c) => (
           <CommentItem key={c.id} comment={c} onReply={handleReply} />
         ))}

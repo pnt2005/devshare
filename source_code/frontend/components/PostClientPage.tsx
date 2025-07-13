@@ -22,13 +22,13 @@ export default function PostClientPage({ post }: { post: any }) {
   if (!hasMounted) return null
 
   const handleDelete = async () => {
-    if (!confirm('Bạn có chắc muốn xoá bài viết này?')) return
+    if (!confirm('Do you really want to delete this post?')) return
     try {
       await api.delete(`/posts/${post.id}`)
-      alert('Đã xoá bài viết!')
+      alert('Delete successed')
       router.push('/posts')
     } catch (err) {
-      alert('Không thể xoá bài viết!')
+      alert('Delete failed')
       console.error(err)
     }
   }
@@ -43,13 +43,13 @@ export default function PostClientPage({ post }: { post: any }) {
             onClick={() => router.push(`/posts/${post.id}/edit`)}
             className="px-4 py-2 bg-blue-600 text-white rounded"
           >
-            ✏️ Sửa bài
+            ✏️ Edit
           </button>
           <button
             onClick={handleDelete}
             className="px-4 py-2 bg-red-600 text-white rounded"
           >
-            ❌ Xoá bài
+            ❌ Delete 
           </button>
         </div>
       )}

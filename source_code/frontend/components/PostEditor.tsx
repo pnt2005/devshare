@@ -25,7 +25,7 @@ export default function PostEditor() {
 
   const onSubmit = async (data: FormData, publish: boolean) => {
     if (!content || content.trim() === '') {
-      alert('Nội dung không được để trống')
+      alert('Content can not be blank')
       return
     }
 
@@ -39,7 +39,7 @@ export default function PostEditor() {
 
       router.push(`/posts/${res.data.id}`)
     } catch (err: any) {
-      console.error('Lỗi tạo bài viết:', err.response?.data || err.message)
+      console.error('Create post error:', err.response?.data || err.message)
     }
   }
 
@@ -52,9 +52,9 @@ export default function PostEditor() {
       {/* Tiêu đề */}
       <input
         type="text"
-        placeholder="Tiêu đề bài viết"
+        placeholder="Title"
         className="w-full p-3 border rounded-md text-lg"
-        {...register('title', { required: 'Tiêu đề là bắt buộc' })}
+        {...register('title', { required: 'Title is required' })}
       />
       {errors.title && (
         <p className="text-red-500 text-sm">{errors.title.message}</p>
@@ -63,7 +63,7 @@ export default function PostEditor() {
       {/* Tags */}
       <input
         type="text"
-        placeholder="Tags (phân tách bằng dấu phẩy)"
+        placeholder="Tags (separate by commas)"
         className="w-full p-2 border rounded-md"
         {...register('tags')}
       />
@@ -76,14 +76,14 @@ export default function PostEditor() {
           type="submit"
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
-          Đăng bài
+          Post
         </button>
         <button
           type="button"
           onClick={handleSubmit((data) => onSubmit(data, false))}
           className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
         >
-          Lưu nháp
+          Save as draft
         </button>
       </div>
     </form>

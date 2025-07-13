@@ -30,14 +30,14 @@ export default function DraftPostsPage() {
 
     return (
       <main className="max-w-3xl mx-auto py-10 px-4 space-y-6">
-        <h1 className="text-2xl font-bold">📝 Bài viết Nháp của bạn</h1>
+        <h1 className="text-2xl font-bold">📝 Drafts</h1>
   
-        {!user && <AuthError message={'Bạn cần đăng nhập để xem bài nháp.'} />}
+        {!user && <AuthError message={'You need to login.'} />}
 
         {user && loading ? (
-          <p>Đang tải...</p>
+          <p>Loading...</p>
         ) : drafts.length === 0 ? (
-          <p>Không có bài nháp nào.</p>
+          <p>No drafts yet.</p>
         ) : (
           drafts.map((post) => (
             <PostCard key={post.id} post={post} />

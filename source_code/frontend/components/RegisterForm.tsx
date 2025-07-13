@@ -30,7 +30,7 @@ export default function RegisterForm() {
       {error.error && <p className="text-red-500">{error.error}</p>}
 
       <div>
-        <label className="block text-sm font-medium">Tên</label>
+        <label className="block text-sm font-medium">Name</label>
         <input
           type="text"
           className="w-full border p-2 rounded-md mt-1"
@@ -54,7 +54,7 @@ export default function RegisterForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Mật khẩu</label>
+        <label className="block text-sm font-medium">Password</label>
         <input
           type="password"
           className="w-full border p-2 rounded-md mt-1"
@@ -69,13 +69,13 @@ export default function RegisterForm() {
         type="submit"
         className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
       >
-        Đăng ký
+        Register
       </button>
 
       <p className="text-sm text-center mt-4">
-        Đã có tài khoản?{' '}
+        Already had account?{' '}
         <a href="/login" className="text-blue-600 hover:underline">
-          Đăng nhập
+          Login
         </a>
       </p>
     </form>

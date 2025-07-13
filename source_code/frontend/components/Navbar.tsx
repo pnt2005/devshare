@@ -26,13 +26,13 @@ export default function Navbar() {
 
         <div className="flex items-center gap-6">
           <Link href="/posts" className="text-gray-700 hover:text-blue-600">
-            Bài viết
+            Posts
           </Link>
           <Link href="/drafts" className="text-gray-700 hover:text-blue-600">
-            Bài nháp
+            Drafts
           </Link>
           <Link href="/posts/new" className="text-gray-700 hover:text-blue-600">
-            Viết bài
+            Write post
           </Link>
           <SearchBar/>
           {user ? (
@@ -49,12 +49,12 @@ export default function Navbar() {
                 onClick={handleLogout}
                 className="text-sm text-red-500 hover:underline"
               >
-                Đăng xuất
+                Logout
               </button>
             </div>
           ) : (
             <Link href="/login" className="text-blue-600 font-medium">
-              Đăng nhập
+              Login
             </Link>
           )}
         </div>

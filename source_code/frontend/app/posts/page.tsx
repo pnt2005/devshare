@@ -31,9 +31,9 @@ export default function PostListPage() {
 
   return (
     <main className="max-w-3xl mx-auto py-10 px-4 space-y-6">
-      <h1 className="text-2xl font-bold mb-4">📰 Danh sách bài viết</h1>
+      <h1 className="text-2xl font-bold mb-4">📰 Posts</h1>
 
-      {loading && <p>Đang tải bài viết...</p>}
+      {loading && <p>Loading...</p>}
 
       {posts.map((post) => (
         <PostCard key={post.id} post={post} />
@@ -45,14 +45,14 @@ export default function PostListPage() {
             href={`/posts?page=${page - 1}`}
             className={`px-4 py-2 rounded ${page > 1 ? 'bg-gray-200 hover:bg-gray-300' : 'text-gray-400 pointer-events-none'}`}
           >
-            ← Trang trước
+            ← Previous
           </a>
-          <span className="text-gray-600">Trang {page} / {totalPages}</span>
+          <span className="text-gray-600">Page {page} / {totalPages}</span>
           <a
             href={`/posts?page=${page + 1}`}
             className={`px-4 py-2 rounded ${page < totalPages ? 'bg-gray-200 hover:bg-gray-300' : 'text-gray-400 pointer-events-none'}`}
           >
-            Trang sau →
+            Next →
           </a>
         </div>
       )}

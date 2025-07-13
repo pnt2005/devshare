@@ -16,14 +16,14 @@ export default function AvatarUploader() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0]
     if (selected) {
-      if (previewUrl) URL.revokeObjectURL(previewUrl) // 🧹 clear ảnh cũ nếu có
+      if (previewUrl) URL.revokeObjectURL(previewUrl) //clear ảnh cũ nếu có
       setFile(selected)
       setPreviewUrl(URL.createObjectURL(selected))
     }
   }
 
   const handleUpload = async () => {
-    if (!file) return alert("Chọn file trước đã!")
+    if (!file) return
     const formData = new FormData()
     formData.append("avatar", file)
 
@@ -34,14 +34,14 @@ export default function AvatarUploader() {
       })
       setUser({ ...user, avatar_url: res.data.avatar_url })
 
-      // 🧹 Dọn dẹp
+      //Dọn dẹp
       if (previewUrl) URL.revokeObjectURL(previewUrl)
       setFile(null)
       setPreviewUrl(null)
-      toast.success("Cập nhật avatar thành công 🎉")
-      if (fileInputRef.current) fileInputRef.current.value = '' // reset input file
+      toast.success("Update avatar success 🎉")
+      if (fileInputRef.current) fileInputRef.current.value = '' //reset input file
     } catch (err) {
-      toast.error("Upload thất bại 😢")
+      toast.error("Update avatar failed 😢")
     } finally {
       setLoading(false)
     }
@@ -68,7 +68,7 @@ export default function AvatarUploader() {
         className="btn btn-primary w-full max-w-xs"
         disabled={!file || loading}
       >
-        {loading ? 'Đang cập nhật...' : 'Cập nhật avatar'}
+        {loading ? 'Updating...' : 'Update avatar'}
       </button>
     </div>
   )
