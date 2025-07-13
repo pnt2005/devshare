@@ -36,9 +36,14 @@ export default function Navbar() {
           </Link>
           <SearchBar/>
           {user ? (
-            <div className="flex items-center gap-4">
-              <Link href="/profile" className="text-gray-700 hover:text-blue-600">
-                👤 {user.name}
+            <div className="flex items-center gap-4 flex-shrink-0">
+              <Link href="/profile" className="flex items-center gap-2 text-gray-700 hover:text-blue-600 truncate max-w-[120px]">
+                <img
+                  src={user.avatar_url}
+                  alt="Avatar"
+                  className="w-8 h-8 rounded-full object-cover border"
+                /> 
+                <span className="text-sm text-gray-700 truncate">{user.name}</span>
               </Link>
               <button
                 onClick={handleLogout}

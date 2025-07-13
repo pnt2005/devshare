@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { api } from '@/utils/api' 
 import { useUser } from '@/contexts/UserContext' 
 import PostCard from '@/components/PostCard'
+import AvatarUploader from '@/components/AvatarUploader'
 
 type Post = {
     id: number
@@ -45,7 +46,10 @@ export default function ProfilePage() {
 
     return (
         <div className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-6">Trang cá nhân của {user.name}</h1>
+        <div>
+          <h1 className="text-2xl font-bold">Trang cá nhân của {user.name}</h1>
+          <AvatarUploader />
+        </div>
 
         <section className="mb-10">
             <h2 className="text-xl font-semibold mb-4">📝 Bài viết đã đăng</h2>

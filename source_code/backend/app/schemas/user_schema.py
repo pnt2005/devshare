@@ -18,3 +18,4 @@ class UserInfoSchema(Schema):
     id = fields.Integer()
     name = fields.String()
     email = fields.Email()
+    avatar_url = fields.String()
