@@ -1,33 +1,75 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { api } from '@/utils/api'
 import { useUser } from '@/contexts/UserContext'
+import toast from 'react-hot-toast'
 
 export default function AvatarUploader() {
   const { user, setUser } = useUser()
   const [file, setFile] = useState<File | null>(null)
-  console.log(user)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selected = e.target.files?.[0]
+    if (selected) {
+      if (previewUrl) URL.revokeObjectURL(previewUrl) // 🧹 clear ảnh cũ nếu có
+      setFile(selected)
+      setPreviewUrl(URL.createObjectURL(selected))
+    }
+  }
+
   const handleUpload = async () => {
     if (!file) return alert("Chọn file trước đã!")
-
     const formData = new FormData()
     formData.append("avatar", file)
 
-    const res = await api.post('/avatar', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    try {
+      setLoading(true)
+      const res = await api.post('/avatar', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
+      setUser({ ...user, avatar_url: res.data.avatar_url })
 
-    setUser({ ...user, avatar_url: res.data.avatar_url })
+      // 🧹 Dọn dẹp
+      if (previewUrl) URL.revokeObjectURL(previewUrl)
+      setFile(null)
+      setPreviewUrl(null)
+      toast.success("Cập nhật avatar thành công 🎉")
+      if (fileInputRef.current) fileInputRef.current.value = '' // reset input file
+    } catch (err) {
+      toast.error("Upload thất bại 😢")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
-    <div className="space-y-2">
-      {user?.avatar_url && (
-        <img src={user.avatar_url} alt="Avatar" className="w-24 h-24 rounded-full object-cover" />
-      )}
-      <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-      <button onClick={handleUpload} className="btn btn-primary">Cập nhật avatar</button>
+    <div className="flex flex-col items-center space-y-3 w-full">
+      <img
+        src={previewUrl || user?.avatar_url || '/static/default-avatar.jpg'}
+        alt="Avatar"
+        className="w-full max-w-[300px] aspect-square rounded-full object-cover border shadow"
+      />
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        className="file-input file-input-bordered w-full max-w-xs"
+      />
+
+      <button
+        onClick={handleUpload}
+        className="btn btn-primary w-full max-w-xs"
+        disabled={!file || loading}
+      >
+        {loading ? 'Đang cập nhật...' : 'Cập nhật avatar'}
+      </button>
     </div>
   )
 }

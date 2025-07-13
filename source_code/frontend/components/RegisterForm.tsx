@@ -30,7 +30,7 @@ export default function RegisterForm() {
       {error.error && <p className="text-red-500">{error.error}</p>}
 
       <div>
-        <label className="block text-sm font-medium">Họ tên</label>
+        <label className="block text-sm font-medium">Tên</label>
         <input
           type="text"
           className="w-full border p-2 rounded-md mt-1"
