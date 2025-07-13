@@ -29,6 +29,7 @@ class Post(db.Model):
             "tag": [tag.name for tag in self.tag],
             "user": {
                 "id": self.user_id,
-                "name": self.user.name
+                "name": self.user.name,
+                "avatar_url": self.user.avatar_url
             }
         }

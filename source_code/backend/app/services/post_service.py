@@ -81,7 +81,7 @@ def delete_post_service(post_id, user_id):
     return {"msg": "Post deleted"}
 
 #search post with pagination
-def search_posts_service(query, page=1, per_page=1):
+def search_posts_service(query, page=1, per_page=5):
     posts = Post.query.filter(
         Post.status == 'published',
         (Post.title.ilike(f"%{query}%") | Post.content.ilike(f"%{query}%"))
