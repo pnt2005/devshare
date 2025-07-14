@@ -17,6 +17,7 @@ class Post(db.Model):
     user = db.relationship('User', backref='posts')
     tag = db.relationship('Tag', secondary=post_tags, backref='post')
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc) + timedelta(hours=7))
+    like = db.relationship("Like", backref="post", cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

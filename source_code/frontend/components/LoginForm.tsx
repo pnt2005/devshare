@@ -67,7 +67,7 @@ export default function LoginForm() {
       <p className="text-sm text-center mt-4">
         Dont't have an account yet?{' '}
         <a href="/register" className="text-blue-600 hover:underline">
-          Logout
+          Register
         </a>
       </p>
     </form>

@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import TimeDisplay from '@/components/TimeDisplay'
+import LikeIcon from './LikeIcon'
 
 export default function PostCard({ post }: { post: any }) {
   const router = useRouter()
@@ -29,6 +30,8 @@ export default function PostCard({ post }: { post: any }) {
         <p className="text-gray-600 text-sm">
           {post.user.name} – <TimeDisplay isoTime={post.created_at} />
         </p>
+
+        <LikeIcon postId={post.id} />
       </div>
 
       <p className="mt-2 text-gray-800 line-clamp-3">{post.excerpt}...</p>

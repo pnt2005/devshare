@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown'
 import TimeDisplay from '@/components/TimeDisplay'
+import LikeButton from './LikeButton'
 
 export default function PostDetail({ post }: { post: any }) {
   return (
@@ -16,6 +17,8 @@ export default function PostDetail({ post }: { post: any }) {
           <p className="text-gray-600 text-sm">
             {post.user.name} – <TimeDisplay isoTime={post.created_at} />
           </p>
+          
+          <LikeButton postId={post.id} />
         </div>
       <div className="flex gap-2 flex-wrap">
         {post.tag.map((tag: string) => (
