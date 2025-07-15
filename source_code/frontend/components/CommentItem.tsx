@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react'
 import TimeDisplay from '@/components/TimeDisplay'
 import ReactMarkdown from 'react-markdown'
+import CommentLikeButton from './CommentLikeButton'
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
@@ -30,12 +31,15 @@ export default function CommentItem({
     <div className={`ml-${Math.min(depth * 4, 12)} mt-2 border-l pl-4`}>
       <p className="text-sm text-gray-600">{comment.user.name} – <TimeDisplay isoTime={comment.created_at}/></p>
       <ReactMarkdown>{comment.content}</ReactMarkdown>
-      <button
-        onClick={() => setShowReplyBox(!showReplyBox)}
-        className="text-blue-500 text-sm mt-1"
-      >
-        Reply
-      </button>
+      <div className="flex items-center gap-3 mt-1">
+        <button
+          onClick={() => setShowReplyBox(!showReplyBox)}
+          className="text-blue-500 text-sm mt-1"
+        >
+          Reply
+        </button>
+        <CommentLikeButton commentId={comment.id} />
+      </div>
 
       {showReplyBox && (
         <div className="mt-2">

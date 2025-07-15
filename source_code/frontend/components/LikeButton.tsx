@@ -48,7 +48,7 @@ export default function LikeButton({ postId }: { postId: number }) {
         toast.error('Error')
       }
     }
-    else toast.error('You have to login')
+    else toast.error('You need to login to like')
   }
 
   return (
