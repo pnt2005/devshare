@@ -3,27 +3,33 @@
 import { useEffect, useState } from 'react'
 import { getLikeStatus, getLikeCount } from '@/utils/api/like'
 import { Heart } from 'lucide-react'
+import { useUser } from '@/contexts/UserContext'
 
 export default function LikeButton({ postId }: { postId: number }) {
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
+  const { user } = useUser() 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [status, count] = await Promise.all([
-          getLikeStatus(postId),
-          getLikeCount(postId),
-        ])
-        setLiked(status)
+        const count = await getLikeCount(postId)
         setLikeCount(count)
       } catch (err) {
-        console.error(err)
+        console.error('Lỗi khi lấy like count:', err)
+      }
+
+      if (user) {
+        try {
+          const status = await getLikeStatus(postId)
+          setLiked(status)
+        } catch (err) {
+          console.error('Lỗi khi lấy like status:', err)
+        }
       }
     }
-
     fetchData()
-  }, [postId])
+  }, [postId, user])
 
 
   return (

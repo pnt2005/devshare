@@ -14,6 +14,7 @@ export default function DraftPostsPage() {
     const { user, setUser } = useUser()
 
     useEffect(() => {
+      if (!user) return
       const fetchDrafts = async () => {
         try {
           const res = await api.get('/posts/drafts') // lấy draft của user

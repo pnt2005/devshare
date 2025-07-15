@@ -12,6 +12,7 @@ const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 export default function CommentSection({ postId }: { postId: string }) {
   const [comments, setComments] = useState<any[]>([])
   const [content, setContent] = useState('')
+  const { user } = useUser()
 
   useEffect(() => {
     fetchComments()
@@ -23,26 +24,32 @@ export default function CommentSection({ postId }: { postId: string }) {
   }
 
   const handleComment = async () => {
-    if (!content.trim()) return
-    try {
-      await api.post(`/posts/${postId}/comments`, { content })
-      setContent('')
-      fetchComments()
-    } catch (err) {
-      toast.error('You need to login to comment')
+    if (user) {
+      if (!content.trim()) return
+      try {
+        await api.post(`/posts/${postId}/comments`, { content })
+        setContent('')
+        fetchComments()
+      } catch (err) {
+        toast.error('Error')
+      }
     }
+    else toast.error('You need to login to comment')
   }
 
   const handleReply = async (parentId: string, replyContent: string) => {
-    try {
-      await api.post(`/posts/${postId}/comments`, {
-        content: replyContent,
-        parent_id: parentId,
-      })
-      fetchComments()
-    } catch (err) {
-      toast.error('You need to login to reply')
+    if (user) {
+      try {
+        await api.post(`/posts/${postId}/comments`, {
+          content: replyContent,
+          parent_id: parentId,
+        })
+        fetchComments()
+      } catch (err) {
+        toast.error('Error')
+      }
     }
+    else toast.error('You need to login to reply')
   }
 
 
