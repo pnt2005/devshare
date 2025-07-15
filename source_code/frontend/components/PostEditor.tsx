@@ -26,7 +26,7 @@ export default function PostEditor() {
 
   const onSubmit = async (data: FormData, publish: boolean) => {
     if (!content || content.trim() === '') {
-      alert('Content can not be blank')
+      toast.error('Content can not be blank')
       return
     }
 
@@ -43,7 +43,7 @@ export default function PostEditor() {
         if (err.response?.data?.error) {
           toast.error(err.response.data.error)
         } else {
-          toast.error("error")
+          toast.error("Error")
         }
     }
   }

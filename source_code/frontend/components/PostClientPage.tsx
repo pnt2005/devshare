@@ -26,7 +26,7 @@ export default function PostClientPage({ post }: { post: any }) {
     if (!confirm('Do you really want to delete this post?')) return
     try {
       await api.delete(`/posts/${post.id}`)
-      toast.success('Delete successed')
+      toast.success('Delete successful')
       router.push('/posts')
     } catch (err) {
       toast.error('Delete failed')

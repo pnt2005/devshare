@@ -5,6 +5,7 @@ import { api } from '@/utils/api'
 import CommentItem from '@/components/CommentItem'
 import { useUser } from '@/contexts/UserContext'
 import dynamic from 'next/dynamic'
+import toast from 'react-hot-toast'
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
@@ -28,7 +29,7 @@ export default function CommentSection({ postId }: { postId: string }) {
       setContent('')
       fetchComments()
     } catch (err) {
-      alert('You need to login to comment')
+      toast.error('You need to login to comment')
     }
   }
 
@@ -40,7 +41,7 @@ export default function CommentSection({ postId }: { postId: string }) {
       })
       fetchComments()
     } catch (err) {
-      alert('You need to login to reply')
+      toast.error('You need to login to reply')
     }
   }
 

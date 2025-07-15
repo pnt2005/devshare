@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { api } from '@/utils/api'
 import Cookies from 'js-cookie'
 import { useUser } from '@/contexts/UserContext'
+import toast from 'react-hot-toast'
 
 export default function LoginForm() {
   const [email, setEmail] = useState('')
@@ -23,11 +24,11 @@ export default function LoginForm() {
 
       Cookies.set('access_token', access_token)
       Cookies.set('refresh_token', refresh_token, { expires: 30 })
-      
+      toast.success('Login successful')
       api.get("/me").then((res) => setUser(res.data));
       router.push('/') // chuyển hướng sau khi login thành công
     } catch (err: any) {
-      setError(err.response?.data?.msg || 'Login fail')
+      toast.error(err.response?.data?.msg || 'Login fail')
     }
   }
 

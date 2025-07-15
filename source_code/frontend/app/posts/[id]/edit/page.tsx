@@ -34,12 +34,13 @@ export default function EditPostPage() {
         content,
         status: publish ? 'published' : 'draft'
       })
+      toast.success('Successful')
       router.push(publish ? '/posts' : '/drafts')
     } catch (err: any) {
         if (err.response?.data?.error) {
           toast.error(err.response.data.error)
         } else {
-          toast.error("error")
+          toast.error("Error")
         }
     }
   }

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { api } from '@/utils/api'
+import toast from 'react-hot-toast'
 
 export default function RegisterForm() {
   const [email, setEmail] = useState('')
@@ -16,6 +17,7 @@ export default function RegisterForm() {
 
     try {
       const res = await api.post('/register', { email, password, name })
+      toast.success('Register successful')
       router.push('/login')
     } catch (err: any) {
         const data = err.response?.data;

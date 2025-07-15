@@ -5,12 +5,14 @@ import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
 import SearchBar from './SearchBar'
 import { useUser } from '@/contexts/UserContext'
+import toast from 'react-hot-toast'
 
 export default function Navbar() {
   const router = useRouter()
   const { user, setUser } = useUser()
 
   const handleLogout = () => {
+    toast.success('Logout successful')
     Cookies.remove('access_token')
     Cookies.remove('refresh_token')
     setUser(null)
