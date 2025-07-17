@@ -21,7 +21,7 @@ export default function SearchBar() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Find post..."
-        className="border rounded px-3 py-1 text-sm"
+        className="w-full border rounded px-3 py-1 text-sm"
       />
       <button
         type="submit"

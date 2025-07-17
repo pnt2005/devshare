@@ -20,32 +20,29 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-white shadow sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-        <Link href="/" className="text-xl font-bold text-blue-600">
+    <nav className="bg-white shadow sticky top-0 z-50 w-full">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+        {/* Logo */}
+        <Link href="/" className="text-xl font-bold text-blue-600 whitespace-nowrap">
           DevShare Lite
         </Link>
 
-        <div className="flex items-center gap-6">
-          <Link href="/posts" className="text-gray-700 hover:text-blue-600">
-            Posts
-          </Link>
-          <Link href="/drafts" className="text-gray-700 hover:text-blue-600">
-            Drafts
-          </Link>
-          <Link href="/posts/new" className="text-gray-700 hover:text-blue-600">
-            Write post
-          </Link>
-          <SearchBar/>
+        {/* Search Bar dài */}
+        <div className="flex-1 mx-6 max-w-2xl">
+          <SearchBar />
+        </div>
+
+        {/* Avatar / Login */}
+        <div>
           {user ? (
-            <div className="flex items-center gap-4 flex-shrink-0">
+            <div className="flex items-center gap-4">
               <Link href="/profile" className="flex items-center gap-2 text-gray-700 hover:text-blue-600 truncate max-w-[120px]">
                 <img
                   src={user.avatar_url}
                   alt="Avatar"
                   className="w-8 h-8 rounded-full object-cover border"
-                /> 
-                <span className="text-sm text-gray-700 truncate">{user.name}</span>
+                />
+                <span className="text-sm truncate">{user.name}</span>
               </Link>
               <button
                 onClick={handleLogout}
