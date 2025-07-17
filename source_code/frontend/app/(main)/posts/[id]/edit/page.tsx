@@ -23,7 +23,7 @@ export default function EditPostPage() {
         setContent(res.data.content || '')
         setStatus(res.data.status || '')
       })
-      .catch(() => alert('Post not found!'))
+      .catch(() => toast.error('Post not found!'))
       .finally(() => setLoading(false))
   }, [id])
 
@@ -51,7 +51,7 @@ export default function EditPostPage() {
       await api.delete(`/posts/${id}`)
       router.push(status === 'published' ? '/posts' : '/drafts')
     } catch (err) {
-      alert('Delete failed!')
+      toast.error('Delete failed!')
     }
   }
 

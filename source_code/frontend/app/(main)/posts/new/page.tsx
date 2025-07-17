@@ -2,7 +2,6 @@
 
 import PostEditor from '@/components/post/PostEditor'
 import { useUser } from '@/contexts/UserContext'
-import AuthError from '@/components/auth/AuthError'
 
 export default function NewPostPage() {
     const { user, setUser } = useUser()
@@ -10,7 +9,6 @@ export default function NewPostPage() {
     return (
       <main className="max-w-3xl mx-auto py-10 px-4">
         <h1 className="text-2xl font-bold mb-6">✍️ Create new post</h1>
-        {!user && <AuthError message={'You need to login.'} />}
         {user && <PostEditor />}
       </main>
     )

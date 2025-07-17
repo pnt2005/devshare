@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get('token')?.value
+  const token = req.cookies.get('access_token')?.value
 
   const isAuthPage = req.nextUrl.pathname === '/login' || req.nextUrl.pathname === '/register'
 
@@ -17,5 +17,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/profile/:path*', '/posts/new', '/posts/:path*/edit'],
+  matcher: ['/posts/new', '/posts/:path*/edit', '/drafts'],
 }
