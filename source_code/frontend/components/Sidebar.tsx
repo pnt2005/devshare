@@ -14,7 +14,7 @@ export default function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="w-56 fixed top-[64px] left-0 h-[calc(100vh-64px)] bg-gray-100 p-4 border-r overflow-y-auto z-40">
+    <aside className="w-56 fixed left-0 h-[calc(100vh-64px)] bg-gray-100 p-4 border-r overflow-y-auto z-40">
       <nav className="flex flex-col gap-3">
         {links.map(({ href, label, icon }) => (
           <Link

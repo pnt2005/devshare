@@ -31,7 +31,7 @@ export default function PostListPage() {
 
 
   return (
-    <main className="max-w-3xl mx-auto py-10 px-4 space-y-6">
+    <div className="max-w-3xl mx-auto py-10 px-4 space-y-6">
       <h1 className="text-2xl font-bold mb-4">📰 Posts</h1>
 
       {loading && <p>Loading...</p>}
@@ -79,6 +79,6 @@ export default function PostListPage() {
           </a>
         </div>
       )}
-    </main>
+    </div>
   )
 }
