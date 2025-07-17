@@ -6,6 +6,7 @@ from marshmallow import ValidationError
 from app.services.post_service import (
     create_post_service,
     get_posts_by_user,
+    list_posts_like_count_service,
     list_posts_service,
     get_post_service,
     update_post_service,
@@ -118,3 +119,9 @@ def list_comments(post_id):
 def get_user_posts(user_id):
     result = get_posts_by_user(user_id)
     return jsonify(result)
+
+#list posts with pagination
+@post_bp.route('/posts/like', methods=['GET'])
+def list_posts_like_count():
+    page = request.args.get('page', 1, type=int)
+    return jsonify(list_posts_like_count_service(page))

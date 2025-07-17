@@ -1,8 +1,9 @@
+from sqlalchemy import func
 from app.models.post import Post
 from app.extensions import db
 from app.models.tag import Tag
-from app.models.user import User
 from app.services.utils import is_content_flagged
+from app.models.like import Like
 
 def create_post_service(data, user_id):
     tag_names = data.pop('tag', [])
@@ -109,4 +110,27 @@ def get_posts_by_user(user_id: int):
     return {
         "published": [post.to_dict() for post in published_posts],
         "drafts": [post.to_dict() for post in draft_posts]
+    }
+
+#list posts by like_count desc with pagination
+def list_posts_like_count_service(page, per_page=5):
+    posts = (
+        db.session.query(Post, func.count(Like.id).label("like_count"))
+        .outerjoin(Like, Post.id == Like.post_id)
+        .filter(Post.status == "published")
+        .group_by(Post.id)
+        .order_by(func.count(Like.id).desc())
+        .paginate(page=page, per_page=per_page, error_out=False)
+    )
+    return {
+        "page": page,
+        "total_posts": posts.total,
+        "total_pages": posts.pages,
+        "posts": [
+            {
+                **post.to_dict(),
+                "like_count": like_count
+            }
+            for post, like_count in posts.items
+        ]
     }
