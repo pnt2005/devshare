@@ -25,7 +25,8 @@ export default function LoginForm() {
       Cookies.set('access_token', access_token)
       Cookies.set('refresh_token', refresh_token, { expires: 30 })
       toast.success('Login successful')
-      api.get("/me").then((res) => setUser(res.data));
+      const response = await api.get("/me")
+      setUser(response.data);
       router.push('/') // chuyển hướng sau khi login thành công
     } catch (err: any) {
       toast.error(err.response?.data?.msg || 'Login fail')
