@@ -5,22 +5,12 @@ import { useRouter } from 'next/navigation'
 import PostDetail from './PostDetail'
 import CommentSection from '../comment/CommentSection'
 import { api } from '@/utils/api'
-import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 
-function useHasMounted() {
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-  return mounted
-}
 
 export default function PostClientPage({ post }: { post: any }) {
   const { user } = useUser()
   const router = useRouter()
-  const hasMounted = useHasMounted()
-  if (!hasMounted) return null
 
   const handleDelete = async () => {
     if (!confirm('Do you really want to delete this post?')) return
