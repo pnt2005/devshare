@@ -1,4 +1,4 @@
-import PostClientPage from '@/components/PostClientPage'
+import PostClientPage from '@/components/post/PostClientPage'
 import { api } from '@/utils/api'
 import { notFound } from 'next/navigation'
 

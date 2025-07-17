@@ -1,8 +1,8 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import TimeDisplay from '@/components/TimeDisplay'
-import LikeIcon from './LikeIcon'
+import TimeDisplay from '@/components/common/TimeDisplay'
+import LikeIcon from '../like/LikeIcon'
 
 export default function PostCard({ post }: { post: any }) {
   const router = useRouter()

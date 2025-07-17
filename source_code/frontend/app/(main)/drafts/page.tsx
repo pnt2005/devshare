@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { api } from '@/utils/api'
-import PostCard from '@/components/PostCard'
-import AuthError from '@/components/AuthError'
+import PostCard from '@/components/post/PostCard'
+import AuthError from '@/components/auth/AuthError'
 import { useUser } from '@/contexts/UserContext'
 
 export default function DraftPostsPage() {

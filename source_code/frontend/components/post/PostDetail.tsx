@@ -1,6 +1,6 @@
 import ReactMarkdown from 'react-markdown'
-import TimeDisplay from '@/components/TimeDisplay'
-import LikeButton from './LikeButton'
+import TimeDisplay from '@/components/common/TimeDisplay'
+import LikeButton from '../like/LikeButton'
 
 export default function PostDetail({ post }: { post: any }) {
   return (

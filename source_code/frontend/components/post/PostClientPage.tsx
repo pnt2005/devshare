@@ -3,7 +3,7 @@
 import { useUser } from '@/contexts/UserContext'
 import { useRouter } from 'next/navigation'
 import PostDetail from './PostDetail'
-import CommentSection from './CommentSection'
+import CommentSection from '../comment/CommentSection'
 import { api } from '@/utils/api'
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'

@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { api } from '@/utils/api'
 import { useUser } from '@/contexts/UserContext'
-import PostCard from '@/components/PostCard'
-import AvatarUploader from '@/components/AvatarUploader'
+import PostCard from '@/components/post/PostCard'
+import AvatarUploader from '@/components/user/AvatarUploader'
 
 type Post = {
   id: number

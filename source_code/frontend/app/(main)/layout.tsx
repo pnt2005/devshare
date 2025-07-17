@@ -1,8 +1,8 @@
 import '@/app/globals.css'
-import Navbar from '@/components/Navbar'
+import Navbar from '@/components/layout/Navbar'
 import { UserProvider } from '@/contexts/UserContext'
 import { Toaster } from 'react-hot-toast'
-import Sidebar from '@/components/Sidebar'
+import Sidebar from '@/components/layout/Sidebar'
 
 export default function MainLayout({
   children,

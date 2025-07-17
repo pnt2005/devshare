@@ -2,9 +2,9 @@
 
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
-import TimeDisplay from '@/components/TimeDisplay'
+import TimeDisplay from '@/components/common/TimeDisplay'
 import ReactMarkdown from 'react-markdown'
-import CommentLikeButton from './CommentLikeButton'
+import CommentLikeButton from '@/components/comment/CommentLikeButton'
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 

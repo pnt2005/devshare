@@ -1,8 +1,8 @@
 'use client'
 
-import PostEditor from '@/components/PostEditor'
+import PostEditor from '@/components/post/PostEditor'
 import { useUser } from '@/contexts/UserContext'
-import AuthError from '@/components/AuthError'
+import AuthError from '@/components/auth/AuthError'
 
 export default function NewPostPage() {
     const { user, setUser } = useUser()

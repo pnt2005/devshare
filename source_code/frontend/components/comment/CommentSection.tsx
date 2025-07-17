@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { api } from '@/utils/api'
-import CommentItem from '@/components/CommentItem'
+import CommentItem from '@/components/comment/CommentItem'
 import { useUser } from '@/contexts/UserContext'
 import dynamic from 'next/dynamic'
 import toast from 'react-hot-toast'
