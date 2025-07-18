@@ -58,7 +58,7 @@ export default function EditPostPage() {
   if (loading) return <p className="p-4">Loading...</p>
 
   return (
-    <main className="max-w-3xl mx-auto py-10 px-4 space-y-4">
+    <main className="max-w-4xl mx-auto p-4">
       <h1 className="text-2xl font-bold">✏️ Edit</h1>
 
       <input
