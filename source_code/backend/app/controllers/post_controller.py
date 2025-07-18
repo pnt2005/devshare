@@ -88,7 +88,8 @@ def search_posts():
 @jwt_required()
 def get_drafts():
     user_id = get_jwt_identity()
-    return jsonify(get_drafts_service(user_id))
+    page = request.args.get("page", default=1, type=int)
+    return jsonify(get_drafts_service(user_id, page))
 
 #create comment on post
 @post_bp.route('/posts/<int:post_id>/comments', methods=['POST'])

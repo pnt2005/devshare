@@ -31,7 +31,7 @@ def create_post_service(data, user_id):
     return post
 
 #list post with pagination
-def list_posts_service(page, per_page=5):
+def list_posts_service(page, per_page=2):
     posts = Post.query.filter_by(status='published') \
                       .order_by(Post.id.desc()) \
                       .paginate(page=page, per_page=per_page, error_out=False)
@@ -82,7 +82,7 @@ def delete_post_service(post_id, user_id):
     return {"msg": "Post deleted"}
 
 #search post with pagination
-def search_posts_service(query, page=1, per_page=5):
+def search_posts_service(query, page=1, per_page=2):
     posts = Post.query.filter(
         Post.status == 'published',
         (Post.title.ilike(f"%{query}%") | Post.content.ilike(f"%{query}%"))
@@ -97,11 +97,16 @@ def search_posts_service(query, page=1, per_page=5):
     }
 
 #get drafts
-def get_drafts_service(user_id):
-    drafts = Post.query.filter_by(user_id=user_id, status='draft').order_by(Post.created_at.desc()).all()
+def get_drafts_service(user_id, page=1, limit=2):
+    query = Post.query.filter_by(user_id=user_id, status='draft').order_by(Post.created_at.desc())
+    pagination = query.paginate(page=page, per_page=limit, error_out=False)
+    
     return {
-        "posts": [p.to_dict() for p in drafts]
+        "posts": [p.to_dict() for p in pagination.items],
+        "total_pages": pagination.pages,
+        "current_page": pagination.page,
     }
+
 
 #get posts and drafts by user
 def get_posts_by_user(user_id: int):
@@ -113,7 +118,7 @@ def get_posts_by_user(user_id: int):
     }
 
 #list posts by like_count desc with pagination
-def list_posts_like_count_service(page, per_page=5):
+def list_posts_like_count_service(page, per_page=2):
     posts = (
         db.session.query(Post, func.count(Like.id).label("like_count"))
         .outerjoin(Like, Post.id == Like.post_id)

@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import PostCard from '@/components/post/PostCard'
 import { api } from '@/utils/api'
+import Pagination from '@/components/common/Pagination'
 
 export default function PostListPage() {
   const searchParams = useSearchParams()
@@ -31,7 +32,7 @@ export default function PostListPage() {
 
 
   return (
-    <div className="max-w-3xl mx-auto py-10 px-4 space-y-6">
+    <div className="max-w-4xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">📰 Posts</h1>
 
       {loading && <p>Loading...</p>}
@@ -63,21 +64,12 @@ export default function PostListPage() {
       ))}
 
       {!loading && (
-        <div className="flex justify-between mt-6">
-          <a
-            href={`/posts?page=${page - 1}`}
-            className={`px-4 py-2 rounded ${page > 1 ? 'bg-gray-200 hover:bg-gray-300' : 'text-gray-400 pointer-events-none'}`}
-          >
-            ← Previous
-          </a>
-          <span className="text-gray-600">Page {page} / {totalPages}</span>
-          <a
-            href={`/posts?page=${page + 1}`}
-            className={`px-4 py-2 rounded ${page < totalPages ? 'bg-gray-200 hover:bg-gray-300' : 'text-gray-400 pointer-events-none'}`}
-          >
-            Next →
-          </a>
-        </div>
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          basePath="/posts"
+          extraQuery={{ sort }}
+        />
       )}
     </div>
   )
