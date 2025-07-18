@@ -2,12 +2,13 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, FileText, FileEdit, Pencil } from 'lucide-react'
+import { Home, FileText, FileEdit, Pencil, Tag } from 'lucide-react'
 
 const links = [
   { href: '/posts', label: 'Posts', icon: <FileText size={18} /> },
   { href: '/drafts', label: 'Drafts', icon: <FileEdit size={18} /> },
   { href: '/posts/new', label: 'Write Post', icon: <Pencil size={18} /> },
+  { href: '/tags', label: 'Tags', icon: <Tag size={18} /> },
 ]
 
 export default function Sidebar() {

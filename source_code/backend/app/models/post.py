@@ -15,7 +15,7 @@ class Post(db.Model):
     status = db.Column(db.String(10))  # draft, published
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User', backref='posts')
-    tag = db.relationship('Tag', secondary=post_tags, backref='post')
+    tag = db.relationship('Tag', secondary=post_tags, backref=db.backref('post', lazy='dynamic'))
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc) + timedelta(hours=7))
     like = db.relationship("Like", backref="post", cascade="all, delete-orphan")
 
