@@ -38,7 +38,8 @@ export default function PostEditor() {
         status: publish ? 'published' : 'draft',
       })
       toast.success("Success")
-      router.push(`/posts/${res.data.id}`)
+      if (publish) router.push(`/posts/${res.data.id}`)
+      else router.push(`/drafts`)
     } catch (err: any) {
         if (err.response?.data?.error) {
           toast.error(err.response.data.error)
