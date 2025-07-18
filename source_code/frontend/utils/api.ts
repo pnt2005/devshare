@@ -44,7 +44,7 @@ api.interceptors.response.use(
 
       } catch (refreshError) {
         //Chỉ toast khi user đã từng đăng nhập (có refresh_token)
-        toast.error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.')
+        toast.error('Your session has expired. Please log in again.')
 
         Cookies.remove('access_token')
         Cookies.remove('refresh_token')
