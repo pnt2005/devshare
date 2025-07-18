@@ -7,51 +7,96 @@ Hệ quản trị cơ sở dữ liệu quan hệ: **PostgreSQL**.
 ---
 
 ## 🔧 Mô hình thực thể – ERD (Entity Relationship Diagram)
-
-<img width="625" height="603" alt="image" src="https://github.com/user-attachments/assets/96151fbf-7689-4fd6-9549-cfb862be20f8" />
+<img width="1209" height="707" alt="image" src="https://github.com/user-attachments/assets/208e7bb7-d15e-4261-a833-2e7522528f78" />
 
 ---
 
 ## 📑 Giải thích các bảng
 
-### 1. `user`
-- **id** *(PK, Integer)*: Khóa chính, định danh duy nhất người dùng.
-- **name** *(String)*: Tên hiển thị của người dùng.
-- **email** *(String, unique)*: Email đăng nhập.
-- **password_hash** *(String)*: Mật khẩu được mã hóa.
-- **avatar_url** *(String)*: URL ảnh đại diện người dùng.
-
-### 2. `post`
-- **id** *(PK, Integer)*: Khóa chính.
-- **title** *(String)*: Tiêu đề bài viết.
-- **content** *(Text)*: Nội dung chính.
-- **excerpt** *(Text)*: Nội dung rút gọn / mô tả ngắn.
-- **status** *(String)*: Trạng thái bài viết (`draft`, `published`).
-- **user_id** *(FK → user.id)*: Tác giả bài viết.
-- **created_at** *(Datetime)*: Thời gian tạo bài viết.
-
-### 3. `comment`
-- **id** *(PK, Integer)*: Khóa chính.
-- **content** *(Text)*: Nội dung bình luận.
-- **user_id** *(FK → user.id)*: Người viết bình luận.
-- **post_id** *(FK → post.id)*: Bài viết được bình luận.
-- **parent_id** *(FK → comment.id, nullable)*: Bình luận cha (hỗ trợ bình luận lồng nhau).
-- **created_at** *(Datetime)*: Thời gian tạo bình luận.
-
-### 4. `tag`
-- **id** *(PK, Integer)*: Khóa chính.
-- **name** *(String)*: Tên thẻ (tag).
-
-### 5. `post_tag`
-- Bảng trung gian phục vụ quan hệ nhiều-nhiều giữa `post` và `tag`.
-- **post_id** *(FK → post.id)*  
-- **tag_id** *(FK → tag.id)*  
+### `user`
+- `id` *(PK, Integer)* – ID người dùng  
+- `name` *(String)* – Tên hiển thị  
+- `email` *(String)* – Email (duy nhất)  
+- `password` *(String)* – Mật khẩu đã mã hóa  
+- `avatar_url` *(String)* – Đường dẫn ảnh đại diện  
+- `created_at` *(Datetime)* – Thời điểm tạo tài khoản  
 
 ---
 
-## 🔗 Quan hệ giữa các bảng
+### `post`
+- `id` *(PK, Integer)* – ID bài viết  
+- `user_id` *(FK → user.id)* – Người tạo bài viết  
+- `title` *(String)* – Tiêu đề  
+- `content` *(Text)* – Nội dung Markdown  
+- `is_published` *(Boolean)* – Trạng thái công khai  
+- `created_at` *(Datetime)* – Ngày tạo  
+- `updated_at` *(Datetime)* – Ngày cập nhật  
 
-- Một `user` có thể tạo nhiều `post` và `comment`.
-- Một `post` có thể có nhiều `comment`.
-- Một `comment` có thể là con của một `comment` khác (quan hệ đệ quy).
-- Một `post` có thể gắn nhiều `tag` và ngược lại (many-to-many).
+---
+
+### `comment`
+- `id` *(PK, Integer)* – ID bình luận  
+- `user_id` *(FK → user.id)* – Người bình luận  
+- `post_id` *(FK → post.id)* – Bài viết  
+- `parent_id` *(FK → comment.id, nullable)* – Bình luận cha (nếu là reply)  
+- `content` *(Text)* – Nội dung bình luận  
+- `created_at` *(Datetime)* – Ngày tạo  
+
+---
+
+### `tag`
+- `id` *(PK, Integer)* – ID thẻ  
+- `name` *(String)* – Tên thẻ (duy nhất)  
+
+---
+
+### `post_tag`
+- `post_id` *(FK → post.id)* – ID bài viết  
+- `tag_id` *(FK → tag.id)* – ID thẻ  
+> *Composite Primary Key*  
+
+---
+
+### `like`
+- `id` *(PK, Integer)* – ID lượt like  
+- `user_id` *(FK → user.id)* – Người đã like  
+- `post_id` *(FK → post.id)* – Bài viết được like  
+- `created_at` *(Datetime)* – Thời gian like  
+
+---
+
+### `comment_like`
+- `id` *(PK, Integer)* – ID lượt like bình luận  
+- `user_id` *(FK → user.id)* – Người đã like  
+- `comment_id` *(FK → comment.id)* – Bình luận được like  
+- `created_at` *(Datetime)* – Thời gian like  
+
+---
+
+### Mối quan hệ giữa các bảng (Relationships)
+
+- Một `User`:
+  - có thể tạo nhiều `Post`
+  - có thể viết nhiều `Comment`
+  - có thể like nhiều `Post` và `Comment`
+
+- Một `Post`:
+  - thuộc về một `User`
+  - có thể có nhiều `Comment`
+  - có thể có nhiều `Like` (từ người dùng)
+  - có thể được gắn nhiều `Tag` (quan hệ nhiều-nhiều thông qua `post_tag`)
+
+- Một `Comment`:
+  - thuộc về một `User`
+  - thuộc về một `Post`
+  - có thể trả lời một `Comment` khác (`parent_id`)
+  - có thể có nhiều `Like`
+
+- Một `Tag`:
+  - có thể gắn với nhiều `Post` thông qua bảng `post_tag`
+
+- Một `Like`:
+  - thuộc về một `User`
+  - có thể là Like cho `Post` hoặc cho `Comment` (chia làm bảng `like` và `comment_like` riêng)
+
+- Bảng `post_tag` là bảng phụ để thiết lập quan hệ nhiều-nhiều giữa `Post` và `Tag`.
