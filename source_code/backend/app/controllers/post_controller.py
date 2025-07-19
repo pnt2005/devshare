@@ -4,6 +4,7 @@ from app.schemas.post_schema import PostSchema
 from app.schemas.comment_schema import CommentSchema
 from marshmallow import ValidationError
 from app.services.post_service import (
+    PostValidationError,
     create_post_service,
     get_posts_by_user,
     list_posts_like_count_service,
@@ -35,10 +36,12 @@ def create_post():
 
     try:
         validated_data = post_schema.load(data)
+        post = create_post_service(validated_data, user_id)
     except ValidationError as err:
         return jsonify(err.messages), 422
+    except PostValidationError as e:
+            return jsonify({"error": e.message}), e.status_code
 
-    post = create_post_service(validated_data, user_id)
     return jsonify({"id": post.id, "title": post.title}), 201
 
 #list posts with pagination

@@ -5,16 +5,22 @@ from app.models.tag import Tag
 from app.services.utils import is_content_flagged
 from app.models.like import Like
 
+class PostValidationError(Exception):
+    def __init__(self, message, status_code=400):
+        super().__init__(message)
+        self.status_code = status_code
+        self.message = message
+
 def create_post_service(data, user_id):
     tag_names = data.pop('tag', [])
     content = data.get('content', '')
 
     #check content
     if is_content_flagged(content):
-        return {"error": "Content is not suitable"}, 400
+        raise PostValidationError("Inappropriate content")
     #check title
     if is_content_flagged(data["title"]):
-        return {"error": "Title is not suitable"}, 400
+        raise PostValidationError("Inappropriate title")
 
     post = Post(**data, user_id=user_id)
     post.excerpt = content[:150] if len(content) > 150 else content
@@ -58,12 +64,12 @@ def update_post_service(post_id, user_id, data):
     if "content" in data:
         #check content
         if is_content_flagged(data["content"]):
-            return {"error": "Content is not suitable"}, 400
+            raise PostValidationError("Inappropriate content")
         post.content = data["content"]
     if "title" in data:
         #check title
         if is_content_flagged(data["title"]):
-            return {"error": "Title is not suitable"}, 400
+            raise PostValidationError("Inappropriate title")
         post.title = data["title"]
     if "status" in data and data["status"] in ["draft", "published"]:
         post.status = data["status"]
