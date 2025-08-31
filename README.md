@@ -52,8 +52,7 @@ The goal is to build a small community focused on exchanging information in the 
 
 ---
 
-## 📁 Cấu trúc thư mục dự án
-
+## 📁 Project Structure
 ```
 source_code/
 │
