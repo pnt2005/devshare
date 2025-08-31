@@ -1,102 +1,102 @@
 
-# Thiết kế Cơ sở Dữ liệu – DevShare Lite
+# Database Design – DevShare Lite
 
-## 🗃️ Loại CSDL sử dụng
-Hệ quản trị cơ sở dữ liệu quan hệ: **PostgreSQL**.  
+## 🗃️ Database Type
+Relational Database Management System: **PostgreSQL**.  
 
 ---
 
-## 🔧 Mô hình thực thể – ERD (Entity Relationship Diagram)
+## 🔧Entity Relationship Diagram (ERD)
 <img width="1209" height="707" alt="image" src="https://github.com/user-attachments/assets/208e7bb7-d15e-4261-a833-2e7522528f78" />
 
 ---
 
-## 📑 Giải thích các bảng
+## 📑 Tables Explanation
 
 ### `user`
-- `id` *(PK, Integer)* – ID người dùng  
-- `name` *(String)* – Tên hiển thị  
-- `email` *(String)* – Email (duy nhất)  
-- `password` *(String)* – Mật khẩu đã mã hóa  
-- `avatar_url` *(String)* – Đường dẫn ảnh đại diện  
-- `created_at` *(Datetime)* – Thời điểm tạo tài khoản  
-
+- `id` *(PK, Integer)* – User ID
+- `name` *(String)* – Display name 
+- `email` *(String)* – Email   
+- `password` *(String)* – Encrypted password
+- `avatar_url` *(String)* – Avatar image URL
+- `created_at` *(Datetime)* – Account creation timestamp
+  
 ---
 
 ### `post`
-- `id` *(PK, Integer)* – ID bài viết  
-- `user_id` *(FK → user.id)* – Người tạo bài viết  
-- `title` *(String)* – Tiêu đề  
-- `content` *(Text)* – Nội dung Markdown  
-- `is_published` *(Boolean)* – Trạng thái công khai  
-- `created_at` *(Datetime)* – Ngày tạo  
-- `updated_at` *(Datetime)* – Ngày cập nhật  
+- `id` *(PK, Integer)* – Post ID 
+- `user_id` *(FK → user.id)* – Post author
+- `title` *(String)* – Post title
+- `content` *(Text)* – Post content (Markdown)
+- `is_published` *(Boolean)* – Publish status
+- `created_at` *(Datetime)* – Created date 
+- `updated_at` *(Datetime)* – Last updated date
 
 ---
 
 ### `comment`
-- `id` *(PK, Integer)* – ID bình luận  
-- `user_id` *(FK → user.id)* – Người bình luận  
-- `post_id` *(FK → post.id)* – Bài viết  
-- `parent_id` *(FK → comment.id, nullable)* – Bình luận cha (nếu là reply)  
-- `content` *(Text)* – Nội dung bình luận  
-- `created_at` *(Datetime)* – Ngày tạo  
+- `id` *(PK, Integer)* – Comment ID
+- `user_id` *(FK → user.id)* – Comment author 
+- `post_id` *(FK → post.id)* – Associated post
+- `parent_id` *(FK → comment.id, nullable)* – Associated post  
+- `content` *(Text)* – Comment content
+- `created_at` *(Datetime)* – Created date
 
 ---
 
 ### `tag`
-- `id` *(PK, Integer)* – ID thẻ  
-- `name` *(String)* – Tên thẻ (duy nhất)  
+- `id` *(PK, Integer)* – Tag ID  
+- `name` *(String)* – Tag name
 
 ---
 
 ### `post_tag`
-- `post_id` *(FK → post.id)* – ID bài viết  
-- `tag_id` *(FK → tag.id)* – ID thẻ  
+- `post_id` *(FK → post.id)* – Post ID 
+- `tag_id` *(FK → tag.id)* – Tag ID
 > *Composite Primary Key*  
 
 ---
 
 ### `like`
-- `id` *(PK, Integer)* – ID lượt like  
-- `user_id` *(FK → user.id)* – Người đã like  
-- `post_id` *(FK → post.id)* – Bài viết được like  
-- `created_at` *(Datetime)* – Thời gian like  
+- `id` *(PK, Integer)* – Like ID
+- `user_id` *(FK → user.id)* – User who liked
+- `post_id` *(FK → post.id)* – Post liked
+- `created_at` *(Datetime)* – Timestamp of like
 
 ---
 
 ### `comment_like`
-- `id` *(PK, Integer)* – ID lượt like bình luận  
-- `user_id` *(FK → user.id)* – Người đã like  
-- `comment_id` *(FK → comment.id)* – Bình luận được like  
-- `created_at` *(Datetime)* – Thời gian like  
+- `id` *(PK, Integer)* – Comment like ID 
+- `user_id` *(FK → user.id)* – User who liked 
+- `comment_id` *(FK → comment.id)* – Comment liked
+- `created_at` *(Datetime)* – Timestamp of like
 
 ---
 
-### Mối quan hệ giữa các bảng (Relationships)
+### Table Relationships
 
-- Một `User`:
-  - có thể tạo nhiều `Post`
-  - có thể viết nhiều `Comment`
-  - có thể like nhiều `Post` và `Comment`
+- A `User`:
+  - can create many `Posts`
+  - can write many `Comments`
+  - can like many `Posts` and `Comments`
 
-- Một `Post`:
-  - thuộc về một `User`
-  - có thể có nhiều `Comment`
-  - có thể có nhiều `Like` (từ người dùng)
-  - có thể được gắn nhiều `Tag` (quan hệ nhiều-nhiều thông qua `post_tag`)
+- A `Post`:
+  - belongs to a `User`
+  - can have many `Comment`
+  - can have many `Like` (can have many)
+  - can have many `Tag` (many-to-many via `post_tag`)
 
-- Một `Comment`:
-  - thuộc về một `User`
-  - thuộc về một `Post`
-  - có thể trả lời một `Comment` khác (`parent_id`)
-  - có thể có nhiều `Like`
+- A `Comment`:
+  - belongs to a `User`
+  - belongs to a `Post`
+  - can reply to another `Comment` (`parent_id`)
+  - can have many `Like`
 
-- Một `Tag`:
-  - có thể gắn với nhiều `Post` thông qua bảng `post_tag`
+- A `Tag`:
+  - can be linked to many `Post` through `post_tag`
 
-- Một `Like`:
-  - thuộc về một `User`
-  - có thể là Like cho `Post` hoặc cho `Comment` (chia làm bảng `like` và `comment_like` riêng)
+- A `Like`:
+  - belongs to a `User`
+  - can represent a like for either a `Post` or a `Comment` (separated into two tables: `like` and `comment_like`)
 
-- Bảng `post_tag` là bảng phụ để thiết lập quan hệ nhiều-nhiều giữa `Post` và `Tag`.
+- The `post_tag` table is a join table to establish the many-to-many relationship between `Post` and `Tag`.
