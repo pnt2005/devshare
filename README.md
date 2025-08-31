@@ -1,54 +1,53 @@
 
 # DevShare Lite
 
-## 🧑‍💻 Thông tin tác giả
+## 🧑‍💻 Author Information
 
-- **Trường**: Trường Đại học Công nghệ Thông tin – ĐHQG TP.HCM (UIT)  
-- **MSSV**: 23521459 
-- **Họ tên**: Phan Nam Thanh 
-
----
-
-## 📌 Tổng quan dự án
-
-**DevShare Lite** là một diễn đàn trực tuyến nơi người dùng có thể đăng tải các bài viết chia sẻ kiến thức, đặt câu hỏi về các vấn đề kỹ thuật, và tham gia trả lời, bình luận. Mục tiêu là xây dựng một cộng đồng nhỏ, tập trung vào việc trao đổi thông tin trong lĩnh vực CNTT	
-
-**Chức năng chính:**
-- **Xác thực người dùng:**  
-  Đăng ký, đăng nhập, đăng xuất bằng email và mật khẩu
-
-- **Quản lý bài viết:**  
-  Tạo, chỉnh sửa, xóa bài viết (hỗ trợ Markdown, tags)  
-  Lưu bài viết ở trạng thái nháp hoặc công khai  
-  Hiển thị danh sách bài viết có phân trang, tìm kiếm, lọc theo tag, sắp xếp theo lượt thích
-
-- **Xem và tương tác với bài viết:**  
-  Xem chi tiết bài viết, bình luận, trả lời bình luận  
-  Thích bài viết và bình luận  
-
-- **Trang cá nhân người dùng:**  
-  Hiển thị thông tin cơ bản, avatar, danh sách bài viết đã đăng và nháp  
-
-- **Trình soạn thảo Markdown:**  
-  Soạn thảo nội dung bài viết bằng cú pháp Markdown  
-
+- **University**: University of Information Technology – VNUHCM (UIT)  
+- **Student ID**: 23521459 
+- **Full Name**: Phan Nam Thanh 
 
 ---
 
-## 🛠️ Công nghệ sử dụng
+## 📌 Project Overview
 
+**DevShare Lite** is an online forum where users can share knowledge, post questions about technical issues, and participate in discussions through answers and comments.
+The goal is to build a small community focused on exchanging information in the IT field.
+
+**Main Features:**
+- **User Authentication:**  
+  Register, login, and logout with email and password
+
+- **Post Management:**  
+  Create, edit, delete posts (supports Markdown, tags)
+  Save posts as draft or publish them
+  Display posts with pagination, search, tag filtering, and sorting by likes
+
+- **View & Interact with Posts:**  
+  View post details, comment, reply to comments
+  Like posts and comments
+
+- **User Profile Page:**  
+  Display basic information, avatar, and user’s posts (drafts & published) 
+
+- **Markdown Editor:**  
+  Write posts using Markdown syntax
+
+---
+
+## 🛠️ Technologies Used
 ### Frontend:
 - **Next.js + React**
 - **TypeScript**
 - **Tailwind CSS**
-- **@uiw/react-md-editor**: Trình soạn thảo Markdown.
-- **axios**: Giao tiếp với backend qua HTTP.
+- **@uiw/react-md-editor**: Markdown editor
+- **axios**: For HTTP requests to backend
 
 ### Backend:
 - **Flask**
-- **Flask-JWT-Extended**: Xác thực người dùng bằng JWT.
+- **Flask-JWT-Extended**: JWT authentication
 - **Flask-SQLAlchemy**: ORM 
-- **Flask-Marshmallow**: Validation schema cho dữ liệu đầu vào.
+- **Flask-Marshmallow**: Input validation schemas
 - **PostgreSQL**
 
 ---
@@ -59,62 +58,57 @@
 source_code/
 │
 ├── frontend/                                # Frontend (Next.js + TypeScript)
+│   ├── app/                                 # Next.js 13+ App Router
+│   │   ├── (auth)/                          # Authentication pages
+│   │   │   ├── login/                       # Login page
+│   │   │   ├── register/                    # Register page
+│   │   │   └── layout.tsx                   # Auth layout
+│   │   ├── (main)/                          # Main pages after login
+│   │   │   ├── drafts/                      # Draft posts
+│   │   │   ├── posts/                       # Public posts
+│   │   │   ├── profile/                     # User profile
+│   │   │   ├── search/                      # Post search
+│   │   │   ├── tags/                        # Tags list
+│   │   │   └── layout.tsx                   # Shared main layout
+│   │   ├── favicon.ico  
+│   │   ├── globals.css  
+│   │   ├── layout.tsx                       # Root layout  
+│   │   └── page.tsx                         # Homepage  
 │   │
-│   ├── app/                                 # Cấu trúc App Router của Next.js 13+
-│   │   │
-│   │   ├── (auth)/                          # Nhóm các trang xác thực người dùng
-│   │   │   ├── login/                       # Trang đăng nhập
-│   │   │   ├── register/                    # Trang đăng ký
-│   │   │   └── layout.tsx                   # Layout riêng cho nhóm auth
-│   │   │
-│   │   ├── (main)/                          # Nhóm các trang chính sau đăng nhập
-│   │   │   ├── drafts/                      # Danh sách bài viết nháp
-│   │   │   ├── posts/                       # Danh sách bài viết công khai
-│   │   │   ├── profile/                     # Trang cá nhân người dùng
-│   │   │   ├── search/                      # Trang tìm kiếm bài viết
-│   │   │   ├── tags/                        # Danh sách tag
-│   │   │   └── layout.tsx                   # Layout dùng chung cho nhóm main
-│   │   │
-│   │   ├── favicon.ico                      # Biểu tượng trang
-│   │   ├── globals.css                      # CSS toàn cục
-│   │   ├── layout.tsx                       # Layout gốc của toàn ứng dụng
-│   │   └── page.tsx                         # Trang chủ
-│   │
-│   ├── components/                          # Các thành phần (component) tái sử dụng
-│   │   ├── auth/                            # Các component liên quan đến xác thực
-│   │   ├── comment/                         # Hiển thị và quản lý bình luận
+│   ├── components/                          # Reusable components
+│   │   ├── auth/                            # Authentication components
+│   │   ├── comment/                         # Comments management
 │   │   ├── common/                          # Pagination, TimeDisplay
-│   │   ├── layout/                          # Sidebar, Navbar,...
-│   │   ├── like/                            # Component like bài viết, bình luận
-│   │   ├── post/                            # PostCard, PostDetail,...
-│   │   └── user/                            # Avatar,...
+│   │   ├── layout/                          # Sidebar, Navbar, ...
+│   │   ├── like/                            # Like buttons
+│   │   ├── post/                            # PostCard, PostDetail, ...
+│   │   └── user/                            # Avatar, ...
 │   │
-│   ├── contexts/                            # React Context (UserContext,...)
-│   ├── utils/                               # Cấu hình API, xử lý cookie,...
-│   ├── public/                              # Ảnh, icon, favicon,...
-│   ├── middleware.ts                        # Middleware kiểm tra xác thực route
+│   ├── contexts/                            # React Context (UserContext, ...)
+│   ├── utils/                               # API configs, cookie helpers
+│   ├── public/                              # Images, icons, favicon
+│   ├── middleware.ts                        # Route authentication middleware
 │
 ├── backend/                                 # Backend (Flask + SQLAlchemy)
+│   ├── app/                                 # Main Flask app
+│   │   ├── config/                          # App configs (db, JWT, env, ...)
+│   │   ├── controllers/                     # Route definitions & logic
+│   │   ├── models/                          # ORM models (User, Post, Like, ...)
+│   │   ├── schemas/                         # Marshmallow schemas
+│   │   ├── services/                        # Business logic
+│   │   ├── static/                          # Static files (avatars, ...)
+│   │   ├── extensions.py                    # Init db, jwt, ma, ...
+│   │   ├── routes.py                        # API blueprints
+│   │   └── __init__.py                      # Flask app factory
 │   │
-│   ├── app/                                 # Code chính của Flask app
-│   │   ├── config/                          # Cấu hình app: database, JWT, env,...
-│   │   ├── controllers/                     # Định nghĩa route và xử lý logic
-│   │   ├── models/                          # Các model dữ liệu ORM (User, Post, Like,...)
-│   │   ├── schemas/                         # Serialize và validate dữ liệu (Marshmallow)
-│   │   ├── services/                        # Tầng logic nghiệp vụ (business logic)
-│   │   ├── static/                          # File tĩnh như ảnh avatar,...
-│   │   ├── extensions.py                    # Khởi tạo db, jwt, ma,...
-│   │   ├── routes.py                        # Đăng ký blueprint API
-│   │   └── __init__.py                      # Tạo Flask app
-│   │
-│   ├── requirements.txt                     # Danh sách thư viện Python cần cài
-│   ├── run.py                               # Điểm bắt đầu chạy Flask server
+│   ├── requirements.txt                     # Python dependencies
+│   ├── run.py                               # Flask server entry point
+
 ```
 
 ---
 
-## ⚙️ Hướng dẫn cài đặt và khởi chạy dự án
-
+## ⚙️ Installation & Run Guide
 ### 1. Clone repository:
 ```bash
 git clone https://github.com/pnt2005/devshare.git
@@ -123,9 +117,9 @@ cd devshare/source_code
 
 ---
 
-### 2. Cài đặt và chạy Backend (Flask):
+### 2. Setup & Run Backend (Flask)
 
-**Yêu cầu: Python 3.10+**
+**Requirements: Python 3.10+**
 
 ```bash
 cd backend
@@ -134,21 +128,21 @@ source venv/bin/activate   # Trên Windows: venv\Scripts\activate
 
 pip install -r requirements.txt
 
-# Tạo file .env (nếu chưa có) và cấu hình biến môi trường như SECRET_KEY, DATABASE_URL
+# Create a .env file (if not exists) and configure environment variables such as: SECRET_KEY, DATABASE_URL
 
-# Khởi tạo database
+# Initialize the database
 
-# Chạy server
+# Run the server
 python3 run.py
 ```
 
-> Mặc định backend chạy ở `http://localhost:5000`
+> Backend will run at `http://localhost:5000`
 
 ---
 
-### 3. Cài đặt và chạy Frontend (Next.js):
+### 3. Setup & Run Frontend (Next.js):
 
-**Yêu cầu: Node.js 18+**
+**Requirements: Node.js 18+**
 
 ```bash
 cd ../frontend
@@ -156,4 +150,4 @@ npm install
 npm run dev
 ```
 
-> Frontend sẽ chạy ở `http://localhost:3000`
+> Frontend will run at `http://localhost:3000`
